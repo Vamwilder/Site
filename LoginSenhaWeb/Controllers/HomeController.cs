@@ -23,22 +23,34 @@ namespace LoginSenhaWeb.Controllers
         }
 
 
-        public IActionResult Login()
+        public IActionResult Login()        
         {
+            TestarConexao();
             return View();
         }
 
-        public IActionResult Register()
-        {
-            return View();
-        }
-
-
-
+        
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        static void TestarConexao()
+        {
+            Console.WriteLine("Entrou em Login");
+            try
+            {
+                var connection = ConnectionManager.GetConnetion();
+                connection.Open();
+                connection.Close();
+                Console.WriteLine("Conexão com banco de dados realizada com sucesso!");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+        
     }
 }
