@@ -23,5 +23,29 @@ namespace LoginSenhaWeb.Models
                 return false;
             }
         }
+
+        public static bool UserExists(string username, string password)
+        {
+            try
+            {
+                using (var cn = new SqlConnection(ConnStr))
+                {
+                    cn.Open();
+
+                    string query = $"SELECT COUNT(*) FROM [User] WHERE username = '{username}' AND password = '{password}'";
+                    using (var cmd = new SqlCommand(query, cn))
+                    {
+                        int count = (int)cmd.ExecuteScalar();
+                        return count > 0;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Erro ao verificar usuário: " + ex.Message);
+                return false;
+            }
+        }
+
     }
 }

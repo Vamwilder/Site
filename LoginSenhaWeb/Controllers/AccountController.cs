@@ -5,15 +5,16 @@ namespace LoginSenhaWeb.Controllers
 {
     public class AccountController : Controller
     {       
+        
 
-        public IActionResult Logado()
+        public IActionResult Logado(string username, string password)
         {
-            if(DataBase.GetConnetion() == true)
+            if(DataBase.UserExists(username, password) == true)
             {
                 return View();
             }else
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Login", "Home");
             }
         }
         public IActionResult Register()
