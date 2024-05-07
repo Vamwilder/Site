@@ -19,7 +19,5 @@ namespace LoginSenhaWeb.Models
             var cn = new SqlConnection(ConnStr);
             return cn;
         }
-
-
     }
 }
