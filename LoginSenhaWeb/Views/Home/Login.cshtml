@@ -1,4 +1,17 @@
 ﻿<!-- Views/Login.cshtml -->
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+@if (TempData["SucessMessage"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["SucessMessage"]
+    </div>
+}
 
 <form asp-controller="Account" asp-action="Logado" method="post">
     <label for="username">Usuário:</label>
@@ -10,4 +23,4 @@
     <button type="submit">Entrar</button>
 </form>
 
-<a asp-controller="Account" asp-action="Register">Registrar novo usuário</a>
+<a asp-controller="Account" asp-action="NovoUsuario">Registrar novo usuário</a>
