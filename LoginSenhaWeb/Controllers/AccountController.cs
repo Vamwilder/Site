@@ -6,12 +6,15 @@ namespace LoginSenhaWeb.Controllers
     public class AccountController : Controller
     {       
 
-        public IActionResult Login()
+        public IActionResult Logado()
         {
-            // Lógica de autenticação
-            // Verifique se o usuário e a senha são validas
-
-            return RedirectToAction("Index", "Home");
+            if(DataBase.GetConnetion() == true)
+            {
+                return View();
+            }else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
         public IActionResult Register()
         {
