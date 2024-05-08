@@ -22,16 +22,16 @@ namespace LoginSenhaWeb.Controllers
         {
             TempData["ErrorMessage"] = null;
             TempData["SucessMessage"] = null;
-            if (username == null || password == null)
+            if(DataBase.CriandoUsuario(username, password) == false)
             {
-                TempData["ErrorMessage"] = "Por favor digite usuário e senha";
-                return RedirectToAction("Login", "Home");
+                TempData["ErrorMessage"] = "Erro ao cadastrar Usuário, ou Usuário ja cadastrado";
+                return RedirectToAction("NovoUsuario", "Account");
             }
             else
             {
                 TempData["SucessMessage"] = "Usuário cadastrado com sucesso!";
                 return RedirectToAction("Login", "Home");
-            }            
+            }
         }
         public IActionResult NovoUsuario()
         {

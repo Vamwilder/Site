@@ -1,4 +1,10 @@
-﻿<form asp-controller="Account" asp-action="Register" method="post">
+﻿@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["ErrorMessage"]
+    </div>
+}
+<form asp-controller="Account" asp-action="Register" method="post">
     <label for="username">Usuário:</label>
     <input type="text" id="username" name="username" required><br>
 

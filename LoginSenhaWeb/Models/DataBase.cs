@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 
 namespace LoginSenhaWeb.Models
@@ -46,8 +47,52 @@ namespace LoginSenhaWeb.Models
                 return false;
             }
         }
-
-
-
+        public static bool UserExistsCadastro(string username)
+        {
+            try
+            {
+                using (var cn = new SqlConnection(ConnStr))
+                {
+                    cn.Open();
+                    string query = $"select count(*) from [User] where username = '{username}'";
+                    using (var cmd = new SqlCommand(query, cn))
+                    {
+                        int count = (int)cmd.ExecuteScalar();
+                        if (count > 0) return true;
+                        else return false;                        
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Erro ao verificar usuario: " + ex.Message);
+                return false;
+            }
+        }
+        public static bool CriandoUsuario(string username, string password)
+        {
+            try
+            {
+                if (UserExistsCadastro(username))
+                {
+                    return false;
+                }
+                using (var cn = new SqlConnection(ConnStr))
+                {
+                    cn.Open();
+                    string query = $"INSERT INTO[User] (username, password) VALUES('{username}', '{password}')";
+                    using (var cmd = new SqlCommand(query, cn))
+                    {
+                        int rowsAffected = cmd.ExecuteNonQuery();
+                        return rowsAffected > 0;
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Erro ao cadastrar usuário: " + ex.Message);
+                return false;
+            }
+        }
     }
 }
